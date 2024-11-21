@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>LongPolling</title>
+  </head>
+  <body>
+    <h1>Long Polling</h1>
+    <div id="content-wrapper">
+      Loading...
+    </div>
+
+    <script>
+      const contentContainer =
+        document.getElementById(
+          "content-wrapper"
+        );
+      const getData = async (
+        params
+      ) => {
+        try {
+          const res = await fetch(
+            `/getData?data=${params}`
+          );
+          const data = await res.json();
+          contentContainer.innerHTML =
+            data?.data;
+          getData(data?.data);
+        } catch (error) {
+          // handle the timeout and call it again
+
+          console.log(error?.response);
+        }
+      };
+      getData();
+    </script>
+  </body>
+</html>
